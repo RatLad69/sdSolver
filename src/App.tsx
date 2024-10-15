@@ -12,7 +12,7 @@ function NumSquare({ value, location }: { value: number; location: number }) {
 	);
 }
 
-function SmallGrid({ values, cols }: { values: number[]; cols: number }) {
+function NumGrid({ values, cols }: { values: number[]; cols: number }) {
 	let rows = [];
 	// const numsPerRow = 3;
 	let row = [];
@@ -54,7 +54,7 @@ function App() {
 
 	return (
 		<>
-			<SmallGrid values={testVals} cols={3}></SmallGrid>
+			<NumGrid values={testVals} cols={3}></NumGrid>
 			<div>{testTxt}</div>
 		</>
 	);
