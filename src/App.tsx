@@ -1,35 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+function NumSquare({ value }: { value: number }) {
+	return <div className="num-square">{value.toString()}</div>;
 }
 
-export default App
+function SmallGrid({ values }: { values: number[] }) {
+	// return values.map((value, i) => (
+	// 	<NumSquare value={value} key={i}></NumSquare>
+	// ));
+	let rows = [];
+	const numsPerRow = 3;
+	let row = [];
+	for (let i = 0; i < Math.floor(values.length / numsPerRow); i++) {
+		row = [];
+		for (let j = 0; j < numsPerRow; j++) {
+			row.push(values[numsPerRow * i + j]);
+		}
+		rows.push(row);
+	}
+
+	return (
+		<table>
+			{rows.map((r, i) => (
+				<tr key={i}>
+					{r.map((value, j) => (
+						<td key={j}>
+							<NumSquare value={value}></NumSquare>
+						</td>
+					))}
+				</tr>
+			))}
+		</table>
+	);
+}
+
+function App() {
+	let [testVals, setTestVals] = useState([1, 2, 3]);
+	useEffect(() => {
+		setTestVals([2, 3, 4, 5, 6, 7, 8, 9, 1]);
+	}, []);
+	return (
+		<>
+			<SmallGrid values={testVals}></SmallGrid>
+			<div>{"banana"}</div>
+		</>
+	);
+}
+
+export default App;
