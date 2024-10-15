@@ -7,8 +7,25 @@
 .num-square {
     width: 5vh;
     height: 5vh;
-    outline: solid;
+    /* outline: solid; */
     text-align: center;
     vertical-align: middle;
     line-height: 5vh;
+}
+
+table {
+    border-collapse: collapse;
+    border: 2px solid rebeccapurple;
+}
+
+td {
+    border: 1px solid rebeccapurple;
+}
+
+td:nth-of-type(3n) {
+    border-right: 3px solid rebeccapurple;
+}
+
+tr:nth-of-type(3n) {
+    border-bottom: 3px solid rebeccapurple;
 }
