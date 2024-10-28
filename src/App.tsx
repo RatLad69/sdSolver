@@ -50,6 +50,21 @@ function App() {
 	let [testTxt, setTestTxt] = useState("banana");
 	useEffect(() => {
 		setTestVals([2, 3, 4, 5, 6, 7, 8, 9, 1]);
+
+		fetch("http://localhost:8989/api/solver")
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error("Response not ok");
+				}
+				return response.json();
+			})
+			.then((data) => {
+				setTestTxt(data.message);
+			})
+			.catch((error) => {
+				setTestTxt("Fetch error");
+				console.error("Fetch error: ", error);
+			});
 	}, []);
 
 	return (
