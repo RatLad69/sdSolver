@@ -15,11 +15,7 @@ function NumSquare({
 	}
 
 	return (
-		<div
-			className="num-square"
-			// onClick={() => console.log(location + ": " + value)}
-		>
-			{/* {value.toString()} */}
+		<div className="num-square">
 			<input
 				type="number"
 				value={value}
@@ -61,8 +57,6 @@ function NumGrid({
 									value={value}
 									location={cols * i + j}
 									key={cols * i + j} // key/location == index of value in values array
-									// location={10 * (i + 1) + j + 1}
-									// key={10 * (i + 1) + j + 1} // First digit of key is row; second is column
 									updateNum={updateNum}
 								></NumSquare>
 							</td>
@@ -75,29 +69,14 @@ function NumGrid({
 }
 
 function App() {
-	let [testVals, setTestVals] = useState([1, 2, 3]);
+	let [vals, setVals] = useState([1, 2, 3]);
 	let [testTxt, setTestTxt] = useState("banana");
 
-	function updateNum(idx: number, nextVal: number) {
-		const nextVals = testVals.map((val, i) => {
-			if (i === idx) {
-				return nextVal;
-			} else {
-				return val;
-			}
-		});
-		setTestVals(nextVals);
-	}
-
-	useEffect(() => {
-		setTestVals([
-			2, 3, 4, 5, 6, 7, 8, 9, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5,
-			6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1,
-			2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6,
-			7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9,
-		]);
-
-		fetch("http://localhost:8989/api/solver")
+	function sendVals() {
+		fetch("http://localhost:8989/api/solver", {
+			method: "POST",
+			body: JSON.stringify({ sdVals: vals }),
+		})
 			.then((response) => {
 				if (!response.ok) {
 					throw new Error("Response not ok");
@@ -111,12 +90,33 @@ function App() {
 				setTestTxt("Fetch error");
 				console.error("Fetch error: ", error);
 			});
+	}
+
+	function updateNum(idx: number, nextVal: number) {
+		const nextVals = vals.map((val, i) => {
+			if (i === idx) {
+				return nextVal;
+			} else {
+				return val;
+			}
+		});
+		setVals(nextVals);
+	}
+
+	useEffect(() => {
+		setVals([
+			2, 3, 4, 5, 6, 7, 8, 9, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5,
+			6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1,
+			2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6,
+			7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+		]);
 	}, []);
 
 	return (
 		<>
-			<NumGrid values={testVals} cols={9} updateNum={updateNum}></NumGrid>
-			<div>{testVals}</div>
+			<NumGrid values={vals} cols={9} updateNum={updateNum}></NumGrid>
+			<button onClick={sendVals}>Solve</button>
+			<div>{vals}</div>
 			<div>{testTxt}</div>
 		</>
 	);
