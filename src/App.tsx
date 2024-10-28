@@ -14,7 +14,6 @@ function NumSquare({ value, location }: { value: number; location: number }) {
 
 function NumGrid({ values, cols }: { values: number[]; cols: number }) {
 	let rows = [];
-	// const numsPerRow = 3;
 	let row = [];
 	for (let i = 0; i < Math.floor(values.length / cols); i++) {
 		row = [];
@@ -49,7 +48,12 @@ function App() {
 	let [testVals, setTestVals] = useState([1, 2, 3]);
 	let [testTxt, setTestTxt] = useState("banana");
 	useEffect(() => {
-		setTestVals([2, 3, 4, 5, 6, 7, 8, 9, 1]);
+		setTestVals([
+			2, 3, 4, 5, 6, 7, 8, 9, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5,
+			6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1,
+			2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6,
+			7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+		]);
 
 		fetch("http://localhost:8989/api/solver")
 			.then((response) => {
@@ -69,7 +73,8 @@ function App() {
 
 	return (
 		<>
-			<NumGrid values={testVals} cols={3}></NumGrid>
+			<NumGrid values={testVals} cols={9}></NumGrid>
+			<div>{testVals}</div>
 			<div>{testTxt}</div>
 		</>
 	);
