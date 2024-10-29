@@ -71,11 +71,12 @@ function NumGrid({
 function App() {
 	let [vals, setVals] = useState([1, 2, 3]);
 	let [testTxt, setTestTxt] = useState("banana");
+	let [sdSize, setSdSize] = useState(9);
 
 	function sendVals() {
 		fetch("http://localhost:8989/api/solver", {
 			method: "POST",
-			body: JSON.stringify({ sdVals: vals }),
+			body: JSON.stringify({ sdVals: vals, size: sdSize }),
 		})
 			.then((response) => {
 				if (!response.ok) {
@@ -105,16 +106,20 @@ function App() {
 
 	useEffect(() => {
 		setVals([
-			2, 3, 4, 5, 6, 7, 8, 9, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5,
-			6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1,
-			2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6,
-			7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+			0, 7, 0, 5, 8, 3, 0, 2, 0, 0, 5, 9, 2, 0, 0, 3, 0, 0, 3, 4, 0, 0, 0,
+			6, 5, 0, 7, 7, 9, 5, 0, 0, 0, 6, 3, 2, 0, 0, 3, 6, 9, 7, 1, 0, 0, 6,
+			8, 0, 0, 0, 2, 7, 0, 0, 9, 1, 4, 8, 3, 5, 0, 7, 6, 0, 3, 0, 7, 0, 1,
+			4, 9, 5, 5, 6, 7, 4, 2, 9, 0, 1, 3,
 		]);
 	}, []);
 
 	return (
 		<>
-			<NumGrid values={vals} cols={9} updateNum={updateNum}></NumGrid>
+			<NumGrid
+				values={vals}
+				cols={sdSize}
+				updateNum={updateNum}
+			></NumGrid>
 			<button onClick={sendVals}>Solve</button>
 			<div>{vals}</div>
 			<div>{testTxt}</div>
