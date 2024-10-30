@@ -85,7 +85,10 @@ function App() {
 				return response.json();
 			})
 			.then((data) => {
-				setTestTxt(data.message);
+				setTestTxt(data.msg);
+				console.log(data);
+				setVals(data.sdVals);
+				setSdSize(data.size);
 			})
 			.catch((error) => {
 				setTestTxt("Fetch error");
